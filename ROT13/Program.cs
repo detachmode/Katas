@@ -31,8 +31,28 @@ namespace ROT13
         {
             //return chars.Where(x => x == 'ß').Concat("ss".ToCharArray());
 
+            Dictionary<char, string> d = new Dictionary<char, string>
+            {
+                {'ß', "SS"},
+                {'Ö', "OE"}
+            };
+
             foreach (char c in chars)
             {
+                //string value;
+
+                //if (d.TryGetValue(c, out value))
+                //{
+                //    foreach (var VARIABLE in COLLECTION)
+                //    {
+                        
+                //    }
+                //}
+                //else
+                //{
+                //    yield return c;
+                //}
+                
                 switch (c)
                 {
                     case 'ß':
@@ -52,26 +72,23 @@ namespace ROT13
         }
 
 
-        private static IEnumerable<char> ConvertCharToRot13(IEnumerable<char> chars)
+        private static IEnumerable<char> ConvertCharToRot13(List<char> chars)
         {
-            foreach (var c in chars)
-            {
-                int indexInAlphabet = c - 'A';
-                int newIndex = (indexInAlphabet + 13) % 26;
-                var newC = ((char)('A' + newIndex));
-                yield return newC;
-            }
+            return chars.Select(c => OffestChar(c));
         }
 
+        private static char OffestChar(char c)
+        {
+            int indexInAlphabet = c - 'A';
+            int newIndex = (indexInAlphabet + 13) % 26;
+            var newC = ((char)('A' + newIndex));
+            return newC;
+        }
 
         private static IEnumerable<char> ToCharStream(string str)
         {
-            var chars = str.ToArray();
+            return str.ToArray();
 
-            foreach (char c in chars)
-            {
-                yield return c;
-            }
         }
 
     }

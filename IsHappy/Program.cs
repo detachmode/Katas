@@ -20,7 +20,17 @@ namespace IsHappy
         public static bool IsNumberHappy(int number)
         {
             var numbersToCheck = CreateNumbers(number);
-            return CheckForHappyness(numbersToCheck);
+            var othernumbers = CreateOtherNumbers(numbersToCheck);
+            return CheckForHappyness(othernumbers);
+        }
+
+        private static IEnumerable<int> CreateOtherNumbers(IEnumerable<int> numbersToCheck)
+        {
+            yield return 555;
+            foreach (var i in numbersToCheck)
+            {
+                yield return i + 1;
+            }
         }
 
         private static bool CheckForHappyness(IEnumerable<int> numbersToCheck)
@@ -41,6 +51,8 @@ namespace IsHappy
                 var digitischars = number.ToString().ToCharArray();
                 var digitsInts = digitischars.Select(x => x - '0');
                 number = digitsInts.Sum(x => x * x);
+
+                //if(number>9999) 
             }
         }
     }
@@ -55,17 +67,18 @@ namespace IsHappy
 
         public static void CheckNumber(int number)
         {
-            OnCheckNumber += CheckIsHappyUnhappy;
-            OnCheckNumber(number);
+            //OnCheckNumber += CheckIsHappyUnhappy;
+            //OnCheckNumber(number);
         }
 
 
 
 
-        public static void CheckIsHappyUnhappy(int number)
+        public static bool CheckIsHappyUnhappy(int number)
         {
-            IF_Is_HappyUnhappy(number,
-                CreateNextNumber);
+          
+           return IF_Is_HappyUnhappy(number, CreateNextNumber).HasValue;
+
         }
 
         private static void CreateNextNumber(int number)
@@ -78,20 +91,19 @@ namespace IsHappy
             OnCheckNumber(sum);
         }
 
-        private static void IF_Is_HappyUnhappy(int number, Action<int> checkNumber)
+        private static bool? IF_Is_HappyUnhappy(int number, Action<int> checkNumber)
         {
             switch (number)
             {
                 case 1:
-                    OnResultFound(true);
-                    return;
+                    return true;
                 case 4:
-                    OnResultFound(false);
-                    return;
+                    return false;
                 default:
                     checkNumber(number);
-                    return;
+                    return null;
             }
+
         }
 
 

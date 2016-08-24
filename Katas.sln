@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tannenbaum", "Tannenbaum\Ta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TannenbaumTests", "TannenbaumTests\TannenbaumTests.csproj", "{50620B48-1EFF-4666-82CD-E3B4DB5AA89A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kassenbuch", "Kassenbuch\Kassenbuch.csproj", "{7CD563BF-6574-4BE7-8709-B7F6E0C73CF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{50620B48-1EFF-4666-82CD-E3B4DB5AA89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50620B48-1EFF-4666-82CD-E3B4DB5AA89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50620B48-1EFF-4666-82CD-E3B4DB5AA89A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD563BF-6574-4BE7-8709-B7F6E0C73CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD563BF-6574-4BE7-8709-B7F6E0C73CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD563BF-6574-4BE7-8709-B7F6E0C73CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD563BF-6574-4BE7-8709-B7F6E0C73CF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
