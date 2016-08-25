@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Kassenbuch
 {
@@ -14,7 +13,7 @@ namespace Kassenbuch
             {
                 booking = CmdPortal.ConvertArgs(args);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Invalid Arguments");
             }

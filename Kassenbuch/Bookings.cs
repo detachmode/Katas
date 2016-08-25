@@ -15,7 +15,7 @@ namespace Kassenbuch
     }
 
 
-    public class Bookings
+    public static class Bookings
     {
         private const string Csvfilename = @"./booking.csv";
         public static event Action<string> OnPrint;
@@ -49,8 +49,8 @@ namespace Kassenbuch
 
             IEnumerable<string[]> splittedLine = lines.Select(x => x.Split(';')).ToList();
 
-            var bookings = ConvertToBooking(splittedLine);
             //todo: wie kann ich das geyieldede weiter yielden ohne for each?
+            var bookings = ConvertToBooking(splittedLine);
             foreach (var booking in bookings)
             {
                 yield return booking;
