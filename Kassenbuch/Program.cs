@@ -1,27 +1,41 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Kassenbuch
 {
 
     internal class Program
     {
+        [STAThread]
+        public static void OpenGui()
+        {
+            var thread = new Thread(() =>
+            {
+                var mainwindow = new KassenbuchMain();
+                mainwindow.Width = 400;
+                mainwindow.Height = 400;
+                mainwindow.ShowDialog();
+            });
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+        }
+
+
         private static void Main(string[] args)
         {
-            var booking = new Booking();
-            try
-            {
-                booking = CmdPortal.ConvertArgs(args);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Invalid Arguments");
-            }
+            Output.OnOutput += Console.WriteLine;
+            Output.OnOutput += x => Debug.WriteLine(x);
 
-            Bookings.Add(booking);
+            OpenGui();
+            Cmd(args);
+        }
 
-            Bookings.OnPrint += x => Debug.WriteLine(x);
-            Bookings.OnPrint += Console.WriteLine;
+
+        private static void Cmd(string[] args)
+        {
+            Bookings.Add(args);
             Bookings.List(2, 2009);
         }
     }

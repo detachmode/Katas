@@ -18,22 +18,48 @@ namespace Kassenbuch
     public static class Bookings
     {
         private const string Csvfilename = @"./booking.csv";
-        public static event Action<string> OnPrint;
 
 
         public static void Add(Booking booking)
         {
             var bookingstring = CreateBookingString(booking);
             InsertBooking(bookingstring);
+            Output.OutputLine("Saved: " + string.Join(" ", booking.Date, booking.Text, booking.Money));
         }
 
 
         public static void List(int month, int year)
         {
+            Output.OutputLine("\n--- List ---\n");
             var bookings = GetBookingsFromCSV();
             var filteredBookings = FilterBookings(bookings, month, year);
             var formattedLines = FormatSplittedLine(filteredBookings);
             PrintLine(formattedLines);
+        }
+
+
+        public static Booking Convert(string[] args)
+        {
+            var booking = new Booking();
+            booking.Date = DateTime.ParseExact(args[0], "d.M.yyyy", CultureInfo.InvariantCulture);
+            booking.Text = args[1];
+            booking.Money = decimal.Parse(args[2]);
+
+            return booking;
+        }
+
+
+        internal static void Add(string[] args)
+        {
+            try
+            {
+                var booking = Convert(args);
+                Add(booking);
+            }
+            catch (Exception)
+            {
+                Output.OutputLine("Invalid Arguments");
+            }
         }
 
 
@@ -45,16 +71,18 @@ namespace Kassenbuch
 
         private static IEnumerable<Booking> GetBookingsFromCSV()
         {
-            var lines = GetLineFromCSV();
+            var lines = GetLinesFromCSV();
 
-            IEnumerable<string[]> splittedLine = lines.Select(x => x.Split(';')).ToList();
+            var splittedLine = lines.Select(x => x.Split(';'));
+
+            return splittedLine.Select(Convert);
 
             //todo: wie kann ich das geyieldede weiter yielden ohne for each?
-            var bookings = ConvertToBooking(splittedLine);
-            foreach (var booking in bookings)
-            {
-                yield return booking;
-            }
+            //var bookings = ConvertToBooking(splittedLine);
+            //foreach (var booking in bookings)
+            //{
+            //    yield return booking;
+            //}
         }
 
 
@@ -65,7 +93,8 @@ namespace Kassenbuch
                 var booking = new Booking();
                 booking.Date = DateTime.ParseExact(strings[0], "d.M.yyyy", CultureInfo.InvariantCulture);
                 booking.Text = strings[1];
-                decimal.TryParse(strings[2], out booking.Money);
+                booking.Money = decimal.Parse(strings[2], CultureInfo.InvariantCulture.NumberFormat);
+
                 yield return booking;
             }
         }
@@ -73,29 +102,21 @@ namespace Kassenbuch
 
         private static IEnumerable<string> FormatSplittedLine(IEnumerable<Booking> bookings)
         {
-            foreach (var booking in bookings)
-            {
-                var str = "";
-                str += booking.Date.ToShortDateString();
-                str += "\t";
-                str += booking.Text;
-                str += "\t";
-                str += booking.Money;
-                yield return str;
-            }
+            return bookings.Select(booking => string.Join("\t",
+                booking.Date.ToShortDateString(),
+                booking.Text,
+                booking.Money
+                ));
         }
 
 
         private static void PrintLine(IEnumerable<string> formattedLines)
         {
-            foreach (var s in formattedLines)
-            {
-                OnPrint?.Invoke(s);
-            }
+            formattedLines.ToList().ForEach(Output.OutputLine);
         }
 
 
-        private static IEnumerable<string> GetLineFromCSV()
+        private static IEnumerable<string> GetLinesFromCSV()
         {
             using (var reader = File.OpenText(Csvfilename))
             {
