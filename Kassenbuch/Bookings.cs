@@ -77,12 +77,8 @@ namespace Kassenbuch
 
             return splittedLine.Select(Convert);
 
-            //todo: wie kann ich das geyieldede weiter yielden ohne for each?
-            //var bookings = ConvertToBooking(splittedLine);
-            //foreach (var booking in bookings)
-            //{
-            //    yield return booking;
-            //}
+            //    //todo: wie kann ich das geyieldede weiter yielden ohne for each?
+            //    return ConvertToBooking(splittedLine);
         }
 
 
