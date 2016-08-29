@@ -15,7 +15,7 @@ namespace Kassenbuch
     }
 
 
-    public static class Bookings
+    public static class Interactions
     {
         private const string Csvfilename = @"./booking.csv";
 

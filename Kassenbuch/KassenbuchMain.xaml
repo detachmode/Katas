@@ -6,27 +6,38 @@
         xmlns:local="clr-namespace:Kassenbuch"
         mc:Ignorable="d"
         d:DesignHeight="400" d:DesignWidth="400">
-    <StackPanel Background="AliceBlue">
-        <StackPanel Margin="12">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+    <StackPanel Background="#FF8AACCB">
 
-                <StackPanel>
-                    <Calendar x:Name="DatePicker" Grid.Column="0" />
-                    <Button Click="ButtonList_OnClick">List</Button>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Stretch" Grid.Column="1" Margin="12">
-                    <Label Content="Zweck" />
-                    <TextBox Height="23" x:Name="zweck">Einkauf</TextBox>
-                    <Label Content="Betrag" />
-                    <TextBox x:Name="betrag">30</TextBox>
-                    <Button Margin="0,12" Click="ButtonSave_OnClick">Save</Button>
-                </StackPanel>
-            </Grid>
+        <Border BorderBrush="White" Margin="3" BorderThickness="1,2,1,1">
+            <StackPanel Margin="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
+                    <StackPanel>
+                        <Calendar x:Name="DatePicker" Grid.Column="0" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch" Grid.Column="1" Margin="12">
+                        <Label Content="Zweck" />
+                        <TextBox Height="23" x:Name="zweck">Einkauf</TextBox>
+                        <Label Content="Betrag" />
+                        <TextBox x:Name="betrag">30</TextBox>
+                        <Button Margin="0,12" Click="ButtonSave_OnClick">Save</Button>
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+
+        </Border>
+
+        <StackPanel>
+            <Label Content="Month" />
+            <TextBox x:Name="monthTextbox" />
+            <Label Content="Year" />
+            <TextBox x:Name="yearTextbox" />
+            <Button Margin="12" Click="ButtonList_OnClick">List</Button>
         </StackPanel>
     </StackPanel>
 </Window>
